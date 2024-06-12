@@ -5,8 +5,77 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProjektSemestralny2"
         mc:Ignorable="d"
-        Title="Registration" Height="450" Width="800">
+        Title="Registration" Height="500" Width="800"
+        WindowStartupLocation="CenterScreen">
+    
     <Grid>
-        
+        <Button x:Name="backButton_Click" Content="back to sign in" HorizontalAlignment="Left"  Margin="10,20,0,384" Width="100" Height="30" Click="backButton_Click_1"  />
+        <TextBlock Text="Registration" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0"/>
+
+        <Grid Margin="10,80,10,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+
+            <Grid Grid.Column="0" Margin="0,0,10,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="First Name" Grid.Row="0" Margin="0,0,0,5"/>
+                <TextBox Grid.Row="1" Margin="0,0,0,5"/>
+
+                <TextBlock Text="Surname" Grid.Row="2" Margin="0,0,0,5"/>
+                <TextBox Grid.Row="3" Margin="0,0,0,5"/>
+
+                <TextBlock Text="City" Grid.Row="4" Margin="0,0,0,5"/>
+                <TextBox Grid.Row="5" Margin="0,0,0,5"/>
+
+                <TextBlock Text="Street" Grid.Row="6" Margin="0,0,0,5"/>
+                <TextBox Grid.Row="7" Margin="0,0,0,5"/>
+
+                <TextBlock Text="Postal Code" Grid.Row="8" Margin="0,0,0,5"/>
+                <TextBox Grid.Row="9" Margin="0,0,0,5"/>
+
+                <TextBlock Text="Birthday" Grid.Row="10" Margin="0,0,0,5"/>
+                <DatePicker Grid.Row="11" Margin="0,0,0,5"/>
+            </Grid>
+
+            <!-- Right side -->
+            <Grid Grid.Column="1" Margin="10,0,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="Username:" Grid.Row="0" Margin="0,0,0,5"/>
+                <TextBox x:Name="UsernameSingUp" Grid.Row="1" Margin="0,0,0,5"/>
+
+                <TextBlock Text="Password:" Grid.Row="2" Margin="0,0,0,5"/>
+                <PasswordBox x:Name="PasswordSingUp" Grid.Row="3" Margin="0,0,0,5"/>
+
+                <TextBlock Text="Repeat password:" Grid.Row="4" Margin="0,0,0,5"/>
+                <PasswordBox Grid.Row="5" Margin="0,0,0,30"/>
+
+                <Button x:Name ="SingUpBtn2_Click" Content="Sign Up" Grid.Row="5" Margin="140,48,140,-28" Width="100" Height="30" />
+            </Grid>
+        </Grid>
     </Grid>
 </Window>
