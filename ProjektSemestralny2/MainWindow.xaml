@@ -41,11 +41,11 @@
                 <PasswordBox x:Name="PasswordLogIn" Grid.Column="1" Margin="4,-1,-69,0" Height="30"/>
             </Grid>
         </StackPanel>
-        <Button x:Name="LogInBtn" Content="Log In" Width="112" Height="32" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,265,0,0" FontSize="16" />
+        <Button x:Name="LogInBtn" Content="Log In" Width="112" Height="32" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,265,0,0" FontSize="16" Click="LogInBtn_Click" />
 
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Height="62" Width="171">
             <TextBlock Text="Don't have an account?" FontSize="16" Padding="5"/>
-            <Button x:Name="SingUpBtn" Content="Sign Up" Width="84" HorizontalAlignment="Right" Background="#FFE7E4F7" FontSize="16" Height="28" />
+            <Button x:Name="SingUpBtn" Content="Sign Up" Width="84" HorizontalAlignment="Right" Background="#FFE7E4F7" FontSize="16" Height="28" Click="SingUpBtn_Click" />
         </StackPanel>
     </Grid>
 </Window>

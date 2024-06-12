@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Registration" Height="500" Width="800"
         WindowStartupLocation="CenterScreen">
-    
+
     <Grid>
         <Button x:Name="backButton_Click" Content="back to sign in" HorizontalAlignment="Left"  Margin="10,20,0,384" Width="100" Height="30" Click="backButton_Click_1"  />
         <TextBlock Text="Registration" FontSize="36" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0"/>
@@ -74,7 +74,7 @@
                 <TextBlock Text="Repeat password:" Grid.Row="4" Margin="0,0,0,5"/>
                 <PasswordBox Grid.Row="5" Margin="0,0,0,30"/>
 
-                <Button x:Name ="SingUpBtn2_Click" Content="Sign Up" Grid.Row="5" Margin="140,48,140,-28" Width="100" Height="30" />
+                <Button x:Name ="SingUpBtn" Content="Sign Up" Grid.Row="5" Margin="140,48,140,0" Width="100" Click="SingUpBtn2_Click" />
             </Grid>
         </Grid>
     </Grid>

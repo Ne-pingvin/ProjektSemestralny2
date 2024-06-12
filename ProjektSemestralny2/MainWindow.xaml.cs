@@ -22,6 +22,18 @@ namespace ProjektSemestralny2
             InitializeComponent();
         }
 
-        
+        private void LogInBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Menu menu = new Menu();
+            menu.Show();
+            this.Hide();
+        }
+
+        private void SingUpBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Registration registration = new Registration();
+            registration.Show();
+            this.Hide();
+        }
     }
 }
