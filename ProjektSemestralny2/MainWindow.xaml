@@ -11,16 +11,17 @@
         <ImageBrush ImageSource="Images/blue-background-gradient.jpg"/>
     </Window.Background>
     <Grid>
-        <TextBlock Text="Welcome"  HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="48" Margin="0,46,0,0" Foreground="#FFFAFFFE"/>
+        <TextBlock Text="Welcome"  HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="48" Margin="308,73,0,0" Foreground="#FFFAFFFE"/>
 
-        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="221,160,0,0" Height="80" Width="322">
-            <Grid Margin="0,0,0,10">
+        <StackPanel Margin="150,152,150,222" Width="500" Height="100">
+
+            <Grid Margin="0,10,0,20" Height="30" Width="400">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Text="Username:" Foreground="#FFFAFFFE" VerticalAlignment="Center" Grid.Column="0" Margin="0,0,10,0" FontSize="16"/>
-                <TextBox x:Name="UsernameLogIn" Grid.Column="1" Margin="0,-7,-63,0" RenderTransformOrigin="0.5,0.5">
+                <TextBox x:Name="UsernameLogIn" Padding="5" Grid.Column="1" Margin="0,0,-100,0" RenderTransformOrigin="0.5,0.5">
                     <TextBox.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -32,16 +33,16 @@
                 </TextBox>
             </Grid>
 
-            <Grid Margin="0,0,0,10">
+            <Grid Margin="10,0,0,0" Height="30" Width="400">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock  Text="Password:" Foreground="#FFFAFFFE" VerticalAlignment="Center" Grid.Column="0" Margin="5,2,5,0" FontSize="16" HorizontalAlignment="Left"/>
-                <PasswordBox x:Name="PasswordLogIn" Grid.Column="1" Margin="4,-1,-69,0" Height="30"/>
+                <PasswordBox x:Name="PasswordLogIn" Padding="5" Grid.Column="1" Margin="0,0,-98,0" Height="30"/>
             </Grid>
         </StackPanel>
-        <Button x:Name="LogInBtn" Content="Log In" Width="112" Height="32" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,265,0,0" FontSize="16" Click="LogInBtn_Click" />
+        <Button x:Name="LogInBtn" Content="Log In" Width="112" Height="32" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="350,267,0,0" FontSize="16" Click="LogInBtn_Click" />
 
         <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Height="62" Width="171">
             <TextBlock Text="Don't have an account?" FontSize="16" Padding="5"/>
