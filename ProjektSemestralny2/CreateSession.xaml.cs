@@ -15,27 +15,24 @@ using System.Windows.Shapes;
 namespace ProjektSemestralny2
 {
     /// <summary>
-    /// Interaction logic for Menu.xaml
+    /// Interaction logic for CreateSession.xaml
     /// </summary>
-    public partial class Menu : Window
+    public partial class CreateSession : Window
     {
-        public Menu()
+        public CreateSession()
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BackToMenuButton_Click(object sender, RoutedEventArgs e)
         {
-            CreateSession session = new CreateSession();
-            session.Show();
+            Menu menu = new Menu();
+            menu.Show();
             this.Hide();
         }
 
-        private void ListOfCandidatesButton_Click(object sender, RoutedEventArgs e)
+        private void TitleTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ListOfCandidates list = new ListOfCandidates();
-            list.Show();
-            this.Hide();
+
         }
     }
 }

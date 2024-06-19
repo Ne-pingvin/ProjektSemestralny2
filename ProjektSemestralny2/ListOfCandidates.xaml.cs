@@ -15,26 +15,26 @@ using System.Windows.Shapes;
 namespace ProjektSemestralny2
 {
     /// <summary>
-    /// Interaction logic for Menu.xaml
+    /// Interaction logic for ListOfCandidates.xaml
     /// </summary>
-    public partial class Menu : Window
+    public partial class ListOfCandidates : Window
     {
-        public Menu()
+        public ListOfCandidates()
         {
             InitializeComponent();
         }
+      
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddCandidate_Click(object sender, RoutedEventArgs e)
         {
-            CreateSession session = new CreateSession();
-            session.Show();
-            this.Hide();
+
         }
 
-        private void ListOfCandidatesButton_Click(object sender, RoutedEventArgs e)
+        private void Back_Click_1(object sender, RoutedEventArgs e)
         {
-            ListOfCandidates list = new ListOfCandidates();
-            list.Show();
+
+            Menu menu = new Menu();
+            menu.Show();
             this.Hide();
         }
     }
