@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,8 @@ namespace ProjektSemestralny2
         {
             InitializeComponent();
         }
+
+        DataBase dataBase = new DataBase();
         private void BackToMenuButton_Click(object sender, RoutedEventArgs e)
         {
             Menu menu = new Menu();
@@ -34,5 +37,35 @@ namespace ProjektSemestralny2
         {
 
         }
+
+        private void Refresh_Click(object sender, RoutedEventArgs e)
+        {
+            LoadCandidates();
+        }
+        private void LoadCandidates()
+        {
+            try
+            {
+                CandidatesListBox.Items.Clear(); // Очистка ListBox перед загрузкой новых данных
+                dataBase.OpenConnection();
+
+                SqlCommand command = new SqlCommand("SELECT nameOfCandidate FROM candidates2table", dataBase.GetConnection());
+                SqlDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    string candidateName = reader["nameOfCandidate"].ToString();
+                    CandidatesListBox.Items.Add(candidateName);
+                }
+
+                reader.Close();
+                dataBase.CloseConnection();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message);
+            }
+        }
+
     }
 }

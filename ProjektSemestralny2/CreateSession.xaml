@@ -19,6 +19,7 @@
         <ListBox Name="CandidatesListBox" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="350,70,0,0" Width="300" Height="260">
             <ListBoxItem Content="checkedListBox1"/>
         </ListBox>
+        <Button x:Name="Refresh" Content="Refresh" HorizontalAlignment="Right" VerticalAlignment="Top" Width="100" Height="20" Margin="0,40,150,0" Click="Refresh_Click" />
         <Button Content="Create Session" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="350,400,0,0" Width="100"/>
     </Grid>
 </Window>
