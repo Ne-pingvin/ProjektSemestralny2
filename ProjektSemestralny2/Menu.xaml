@@ -19,7 +19,9 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Text="The List Of Voting Sessions:" Margin="0,0,0,5"/>
-                    <ListBox Name="listBox1" Grid.Row="1" Margin="0,0,0,5"/>
+                    <ListBox x:Name="ListAvSessions" Grid.Row="1" Margin="0,0,0,5"/>
+                    <Button x:Name="RefreshBtn" Content="Refresh" HorizontalAlignment="Left" VerticalAlignment="Bottom" Grid.Row="2" Margin="650,0,0,5" Width="100" Height="20" Click="RefreshBtn_Click"/>
+                    <Button x:Name="DeleteSessionBtn" Content="Delete session" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Margin="10,0,0,5" Width="100" Height="20" Click="DeleteSessionBtn_Click"/>
                     <Button Content="Go To Session" Grid.Row="2" HorizontalAlignment="Center" Width="100" Margin="0,5,0,5"/>
                     <TextBlock Text="You Can Add Your Own Voting Session Here:" Grid.Row="3" Margin="0,5,0,5"/>
                     <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,5">
