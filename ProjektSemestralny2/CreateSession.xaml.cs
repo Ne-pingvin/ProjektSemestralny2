@@ -25,7 +25,7 @@ namespace ProjektSemestralny2
 
         private void TitleTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Логика для обработки изменения текста (если необходимо)
+           
         }
 
         private void Refresh_Click(object sender, RoutedEventArgs e)
@@ -37,7 +37,7 @@ namespace ProjektSemestralny2
         {
             try
             {
-                CandidatesListBox.Items.Clear(); // Очистка ListBox перед загрузкой новых данных
+                CandidatesListBox.Items.Clear(); // Clearing ListBox before loading new data
                 dataBase.OpenConnection();
 
                 SqlCommand command = new SqlCommand("SELECT nameOfCandidate FROM candidates2table", dataBase.GetConnection());
@@ -60,18 +60,18 @@ namespace ProjektSemestralny2
 
         private void СreateSessionBtn_Click(object sender, RoutedEventArgs e)
         {
-            // Получение названия и описания сессии
+            // Getting the name and description of the session
             string sessionName = TitleTextBox.Text;
             string sessionDescription = DescriptionTextBox.Text;
 
-            // Проверка, что поля не пустые
+            // Checking that fields are not empty
             if (string.IsNullOrWhiteSpace(sessionName) || string.IsNullOrWhiteSpace(sessionDescription))
             {
                 MessageBox.Show("Please provide both a session title and description.");
                 return;
             }
 
-            // Получение выбранных кандидатов
+            // Receiving selected candidates
             var selectedCandidates = CandidatesListBox.SelectedItems.Cast<ListBoxItem>().Select(item => item.Content.ToString()).ToList();
 
             if (!selectedCandidates.Any())
@@ -84,13 +84,13 @@ namespace ProjektSemestralny2
             {
                 dataBase.OpenConnection();
 
-                // Создание новой сессии
+                // Creating a new session
                 SqlCommand insertSessionCommand = new SqlCommand("INSERT INTO SessionTrue (session_name, session_description) OUTPUT INSERTED.id_session VALUES (@Name, @Description)", dataBase.GetConnection());
                 insertSessionCommand.Parameters.AddWithValue("@Name", sessionName);
                 insertSessionCommand.Parameters.AddWithValue("@Description", sessionDescription);
                 int sessionId = (int)insertSessionCommand.ExecuteScalar();
 
-                // Добавление выбранных кандидатов к сессии
+                // Adding selected candidates to the session
                 foreach (var candidateName in selectedCandidates)
                 {
                     SqlCommand getCandidateIdCommand = new SqlCommand("SELECT idCandidate FROM candidates2table WHERE nameOfCandidate = @Name", dataBase.GetConnection());
@@ -107,7 +107,7 @@ namespace ProjektSemestralny2
 
                 MessageBox.Show("Session created successfully!");
 
-                // Очистка полей после успешного создания сессии
+                // Clearing fields after successful session creation
                 TitleTextBox.Clear();
                 DescriptionTextBox.Clear();
                 CandidatesListBox.UnselectAll();
@@ -117,29 +117,5 @@ namespace ProjektSemestralny2
                 MessageBox.Show($"An error occurred: {ex.Message}");
             }
         }
-    }
-
-    public class Session
-    {
-        public int IdSession { get; set; }
-        public string SessionName { get; set; }
-        public string SessionDescription { get; set; }
-        public ICollection<SessionCandidate> SessionCandidates { get; set; }
-    }
-
-    public class Candidate
-    {
-        public int IdCandidate { get; set; }
-        public string NameOfCandidate { get; set; }
-        public ICollection<SessionCandidate> SessionCandidates { get; set; }
-    }
-
-    public class SessionCandidate
-    {
-        public int IdSession { get; set; }
-        public Session Session { get; set; }
-
-        public int IdCandidate { get; set; }
-        public Candidate Candidate { get; set; }
-    }
+    } 
 }

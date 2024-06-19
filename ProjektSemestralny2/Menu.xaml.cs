@@ -50,17 +50,22 @@ namespace ProjektSemestralny2
         {
             try
             {
-                ListAvSessions.Items.Clear(); // Очистка ListBox перед загрузкой новых данных
+                ListAvSessions.Items.Clear(); // Clearing ListBox before loading new data
                 dataBase.OpenConnection();
 
-                SqlCommand command = new SqlCommand("SELECT session_name, session_description FROM SessionTrue", dataBase.GetConnection());
+                SqlCommand command = new SqlCommand("SELECT id_session, session_name, session_description FROM SessionTrue", dataBase.GetConnection());
                 SqlDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
+                    int sessionId = reader.GetInt32(0); // Предполагаем, что первый столбец содержит id
                     string sessionName = reader["session_name"].ToString();
                     string sessionDescription = reader["session_description"].ToString();
-                    ListAvSessions.Items.Add($"{sessionName}: {sessionDescription}");
+
+                    ListBoxItem item = new ListBoxItem();
+                    item.Content = $"{sessionName}: {sessionDescription}";
+                    item.Tag = sessionId;
+                    ListAvSessions.Items.Add(item);
                 }
 
                 reader.Close();
@@ -88,7 +93,7 @@ namespace ProjektSemestralny2
                 {
                     dataBase.OpenConnection();
 
-                    // Удаление сессии и всех связей с кандидатами
+                    // Deleting a session and all connections with candidates
                     SqlCommand deleteSessionCandidatesCommand = new SqlCommand("DELETE FROM SessionCandidatesTruw WHERE id_session = @SessionId", dataBase.GetConnection());
                     deleteSessionCandidatesCommand.Parameters.AddWithValue("@SessionId", sessionId);
                     deleteSessionCandidatesCommand.ExecuteNonQuery();
@@ -100,7 +105,7 @@ namespace ProjektSemestralny2
                     dataBase.CloseConnection();
 
                     MessageBox.Show("Session deleted successfully!");
-                    LoadSessions(); // Обновление списка сессий
+                    LoadSessions(); // Updating the list of sessions
                 }
                 catch (Exception ex)
                 {
@@ -110,6 +115,55 @@ namespace ProjektSemestralny2
             else
             {
                 MessageBox.Show("Invalid selection.");
+            }
+        }
+
+        private int _userId;
+        private string _username;
+
+        private void GetIdFromBD()
+        {
+            try
+            {
+                dataBase.OpenConnection();
+
+                SqlCommand command = new SqlCommand("SELECT id_user FROM Users WHERE username = @Username", dataBase.GetConnection());
+                command.Parameters.AddWithValue("@Username", _username);
+                SqlDataReader reader = command.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    _userId = reader.GetInt32(0);
+                }
+
+                reader.Close();
+                dataBase.CloseConnection();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message);
+            }
+        }
+
+        private void GoToSession_Click(object sender, RoutedEventArgs e)
+        {
+            if (ListAvSessions.SelectedItem != null)
+            {
+                if (ListAvSessions.SelectedItem is ListBoxItem selectedItem)
+                {
+                    int sessionId = (int)selectedItem.Tag;
+                    WindowSession sessionWindow = new WindowSession(sessionId, _userId);
+                    sessionWindow.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid selection.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a session to go to.");
             }
         }
     }

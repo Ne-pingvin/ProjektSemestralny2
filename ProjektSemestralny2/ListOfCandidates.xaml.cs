@@ -66,7 +66,7 @@ namespace ProjektSemestralny2
         {
             try
             {
-                CandidatesListBox.Items.Clear(); // Очистка ListBox перед загрузкой новых данных
+                CandidatesListBox.Items.Clear(); // Clearing ListBox before loading new data
                 dataBase.OpenConnection();
 
                 SqlCommand command = new SqlCommand("SELECT nameOfCandidate FROM candidates2table", dataBase.GetConnection());
