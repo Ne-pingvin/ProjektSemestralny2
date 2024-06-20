@@ -17,7 +17,7 @@
         <Button x:Name="DeleteBtn" Content="Delete" HorizontalAlignment="Right" VerticalAlignment="Bottom" Height="20" Width="100" Margin="0,0,60,10" Click="DeleteBtn_Click"/>
 
 
-        <TextBlock Text="Candidates List:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,110,0,200"/>
+        <TextBlock Text="Candidates List:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,100,0,200"/>
         <ListBox Name="CandidatesListBox" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10,0,10,40" Height="300" Width="700"
              BorderBrush="Black" BorderThickness="1"/>
 

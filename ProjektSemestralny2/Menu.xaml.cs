@@ -153,8 +153,7 @@ namespace ProjektSemestralny2
                 {
                     int sessionId = (int)selectedItem.Tag;
                     WindowSession sessionWindow = new WindowSession(sessionId, _userId);
-                    sessionWindow.Show();
-                    this.Hide();
+                    sessionWindow.ShowDialog();
                 }
                 else
                 {
