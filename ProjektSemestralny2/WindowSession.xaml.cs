@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace ProjektSemestralny2
 {
@@ -21,15 +11,47 @@ namespace ProjektSemestralny2
     public partial class WindowSession : Window
     {
         private int _sessionId;
-        private int _userId;
 
         public WindowSession(int sessionId, int userId)
         {
             InitializeComponent();
             _sessionId = sessionId;
-            _userId = userId;
             LoadCandidates();
         }
+        MainWindow mainWin = new MainWindow();
+
+        public int GetUserId(string username)
+        {
+            int userId = -1; // -1 означает, что пользователь не найден или ошибка
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection("Data Source=LAPTOP-472C2EDF;Initial Catalog=VotesOnline;Integrated Security=True"))
+                {
+                    connection.Open();
+
+                    // SQL-запрос для получения ID пользователя на основе имени пользователя
+                    SqlCommand command = new SqlCommand("SELECT UserID FROM Login WHERE Username = @Username", connection);
+                    command.Parameters.AddWithValue("@Username", username);
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        userId = reader.GetInt32(0); // Получение UserID из результата запроса
+                    }
+
+                    reader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message);
+            }
+
+            return userId;
+        }
+
 
         private void LoadCandidates()
         {
@@ -66,39 +88,16 @@ namespace ProjektSemestralny2
             }
         }
 
-        private bool VerifyForeignKey(int userId, int sessionId, int candidateId)
-        {
-            using (SqlConnection connection = new SqlConnection("Data Source=LAPTOP-472C2EDF;Initial Catalog=VotesOnline;Integrated Security=True"))
-            {
-                connection.Open();
-
-                // Проверка существования пользователя
-                SqlCommand commandUser = new SqlCommand("SELECT COUNT(*) FROM Users WHERE id_user = @UserId", connection);
-                commandUser.Parameters.AddWithValue("@UserId", userId);
-                int countUser = (int)commandUser.ExecuteScalar();
-
-                // Проверка существования сессии
-                SqlCommand commandSession = new SqlCommand("SELECT COUNT(*) FROM SessionTrue WHERE id_session = @SessionId", connection);
-                commandSession.Parameters.AddWithValue("@SessionId", sessionId);
-                int countSession = (int)commandSession.ExecuteScalar();
-
-                // Проверка существования кандидата
-                SqlCommand commandCandidate = new SqlCommand("SELECT COUNT(*) FROM candidates2table WHERE idCandidate = @CandidateId", connection);
-                commandCandidate.Parameters.AddWithValue("@CandidateId", candidateId);
-                int countCandidate = (int)commandCandidate.ExecuteScalar();
-
-                return (countUser > 0 && countSession > 0 && countCandidate > 0);
-            }
-        }
-
         private void VoteButton_Click(object sender, RoutedEventArgs e)
         {
             if (CandidatesListBox.SelectedItem is ListBoxItem selectedItem)
             {
                 int candidateId = (int)selectedItem.Tag;
-                if (!VerifyForeignKey(_userId, _sessionId, candidateId))
+                int userId = GetUserId(mainWin.actualUsername);
+
+                if (userId == -1)
                 {
-                    MessageBox.Show("Invalid data for voting. Please check user, session, and candidate IDs.");
+                    MessageBox.Show("Invalid user.");
                     return;
                 }
 
@@ -107,15 +106,35 @@ namespace ProjektSemestralny2
                     using (SqlConnection connection = new SqlConnection("Data Source=LAPTOP-472C2EDF;Initial Catalog=VotesOnline;Integrated Security=True"))
                     {
                         connection.Open();
-                        SqlCommand voteCommand = new SqlCommand("INSERT INTO Votes (id_user, id_session, id_candidate) VALUES (@UserId, @SessionId, @CandidateId)", connection);
-                        voteCommand.Parameters.AddWithValue("@UserId", _userId);
+
+                        // Проверка на существующий голос в данной сессии
+                        SqlCommand checkVoteCommand = new SqlCommand("SELECT COUNT(*) FROM VotesTrueNr2 WHERE id_user = @UserId AND id_session = @SessionId", connection);
+                        checkVoteCommand.Parameters.AddWithValue("@UserId", userId);
+                        checkVoteCommand.Parameters.AddWithValue("@SessionId", _sessionId);
+                        int voteExists = (int)checkVoteCommand.ExecuteScalar();
+
+                        if (voteExists > 0)
+                        {
+                            MessageBox.Show("You have already voted in this session.");
+                            return;
+                        }
+
+                        // Добавление нового голоса
+                        SqlCommand voteCommand = new SqlCommand("INSERT INTO VotesTrueNr2 (id_user, id_session, id_candidate) VALUES (@UserId, @SessionId, @CandidateId)", connection);
+                        voteCommand.Parameters.AddWithValue("@UserId", userId);
                         voteCommand.Parameters.AddWithValue("@SessionId", _sessionId);
                         voteCommand.Parameters.AddWithValue("@CandidateId", candidateId);
                         voteCommand.ExecuteNonQuery();
-                    }
 
-                    MessageBox.Show("Vote cast successfully!");
-                    this.Close();
+                        // Обновление счетчика голосов
+                        SqlCommand updateVoteCountCommand = new SqlCommand("UPDATE VoteCount SET vote_count = vote_count + 1 WHERE id_session = @SessionId AND id_candidate = @CandidateId", connection);
+                        updateVoteCountCommand.Parameters.AddWithValue("@SessionId", _sessionId);
+                        updateVoteCountCommand.Parameters.AddWithValue("@CandidateId", candidateId);
+                        updateVoteCountCommand.ExecuteNonQuery();
+
+                        MessageBox.Show("Vote cast successfully!");
+                        this.Close();
+                    }
                 }
                 catch (Exception ex)
                 {

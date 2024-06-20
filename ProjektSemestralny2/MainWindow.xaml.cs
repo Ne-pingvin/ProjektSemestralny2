@@ -23,6 +23,9 @@ namespace ProjektSemestralny2
             InitializeComponent();
         }
 
+        private string _actualUsername;
+        public string actualUsername { get; set; }
+
         private void LogInBtn_Click(object sender, RoutedEventArgs e)
         {
             CheckUserData(UsernameLogIn.Text, PasswordLogIn.Password);
@@ -49,6 +52,7 @@ namespace ProjektSemestralny2
             //if the request returned a result, then a user with this login and password exists
             if (reader.HasRows)
             {
+                actualUsername = login;
                 MessageBox.Show("User has been logged in!");
                 Menu menu = new Menu();
                 menu.Show();
